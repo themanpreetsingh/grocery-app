@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+}
+
+.container {
+  width: 85%;
+  margin: auto;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.hide {
+  /* display: none !important; */
+  visibility: hidden;
+}

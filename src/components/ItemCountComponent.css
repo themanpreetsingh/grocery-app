@@ -1,0 +1,8 @@
+.itemCountComponent {
+    display: flex;
+    align-content: center;
+}
+
+.itemCountComponent * {
+    margin: 0 0.5rem;
+}

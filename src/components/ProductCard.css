@@ -1,0 +1,53 @@
+.productCard {
+    display: flex;
+    box-shadow: 5px 5px 20px rgba(133, 133, 133, 0.2);
+    border-radius: 30px;
+    aspect-ratio: 1 / 0.6;
+}
+
+.productCard img {
+    width: 50%;
+    object-fit: contain;
+}
+
+.productInfo {
+    width: 50%;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.productInfo h3 {
+    margin-bottom: 0;
+}
+
+.productInfo .itemCountComponent {
+    justify-content: end;
+}
+
+.description {
+    height: 50%;
+    overflow: scroll;
+}
+
+.priceAndIcons {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    margin: 0.2rem 0;
+}
+
+.availability {
+    color: white;
+    border-radius: 10px;
+    width: max-content;
+    padding: 0 0.3rem;
+    font-size: small;
+    margin: 0.2rem 0;
+}
+
+.green {
+    background-color: #00CA1480;
+}
+
+.orange {
+    background-color: #FF944680;
+}
