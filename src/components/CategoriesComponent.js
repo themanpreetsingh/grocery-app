@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import './CategoriesComponent.css'
 
 function CategoriesComponent({onCategorySelect}) {

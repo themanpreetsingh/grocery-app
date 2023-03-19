@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import './ProductCard.css'
 import { useContext,useState, useEffect } from 'react'
 import AddToCartIcon from '../icons/AddToCartIcon'

@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import './NavbarComponent.css';
 import AvatarIcon from '../icons/AvatarIcon';
 import WishlistIcon from '../icons/WishlistIcon';

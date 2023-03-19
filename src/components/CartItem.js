@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import ItemCountComponent from "./ItemCountComponent"
 import RemoveIcon from "../icons/RemoveIcon"
 import './CartItem.css'

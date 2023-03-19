@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import { useState, useEffect, useContext } from 'react';
 import CategoriesComponent from "../components/CategoriesComponent"
 import ProductCard from "../components/ProductCard"

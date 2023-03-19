@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import CartItem from "../components/CartItem"
 import { useContext, useState, useEffect } from "react"
 import CartContext from "../CartContext"

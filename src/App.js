@@ -1,3 +1,4 @@
+// Author: themanpreetsingh.github.io
 import './App.css';
 import { useState, useEffect } from 'react';
 import NavbarComponent from './components/NavbarComponent';
