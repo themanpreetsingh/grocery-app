@@ -43,3 +43,42 @@ nav {
     max-width: 100%;
 }
 
+.menu, .menuIcons {
+    display: none;
+}
+
+
+@media screen and (max-width: 1275px) {
+    .menu {
+        display: block;
+        cursor: pointer;
+    }
+    .iconContainer {
+        display: none;
+    }
+
+    .navBarIcons {
+        width: 10%;
+    }
+
+    .menuIcons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .menuIcons div {
+        max-width: 100%;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1025px) {
+    nav h3 {
+        font-size: 1.5rem;
+    }
+}
+

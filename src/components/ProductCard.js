@@ -70,8 +70,12 @@ function ProductCard({name, description, img, price, available, countMap}) {
                 <div className="description">
                     <p>{description}</p>
                 </div>
-                <div className={availabilityClass}>{availabilityInfo}</div>
-                <ItemCountComponent count={itemCount} className={hideCart ? "" : "hide"} addToCart={addToCart} removeFromCart={removeFromCart}/>
+                <div className="countAndAvailability">
+                    <div className={availabilityClass}>{availabilityInfo}</div>
+                    <div className="itemCountContainer">
+                        <ItemCountComponent count={itemCount} className={hideCart ? "" : "hide"} addToCart={addToCart} removeFromCart={removeFromCart}/>
+                    </div>
+                </div>
                 <div className="priceAndIcons">
                     <span>{price}</span> 
                     <AddToCartIcon className={'icon' + (hideCart ? " hide" : "")} onClick={addToCart}/>

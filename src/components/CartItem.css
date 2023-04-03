@@ -51,3 +51,51 @@
 .orange {
     background-color: #FF944680;
 }
+
+@media screen and (max-width:900px) {
+    .cartItem img {
+        grid-area: image;
+        margin: 0;
+        width: 35%;
+    }
+
+    .cartItemName {
+        grid-area: name;
+        margin-left: 80%;
+    }
+
+    .cartCountContainer {
+        grid-area: count;
+        margin: 5% 0;
+        padding: 0;
+    }
+
+    .cartItemPrice {
+        grid-area: price;
+        align-self: center;
+        justify-self: start;
+        margin: 0;
+    }
+
+    .removeIcon {
+        grid-area: removeIcon;
+        margin: 2% 0 2% 80%;
+    }
+    
+    .cartItemName, .cartCountContainer, .cartItemPrice, .removeIcon {
+        width: 100%;
+    }
+
+    .cartItem {
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: "name name name name name"
+        "image image image price count"
+        " . . removeIcon . .";
+        align-items: center;
+        justify-items: center;
+        height: auto;
+        width: 60%;
+    }
+}

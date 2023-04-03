@@ -24,8 +24,7 @@ function SearchPage({searchFilter}) {
         setCountMap(tempCountMap)
     }
     
-    useEffect(() => fillCountMap(), []);
-
+    useEffect(() => fillCountMap(), [])
 
     return (
         <div>
