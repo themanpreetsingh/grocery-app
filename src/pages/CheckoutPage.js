@@ -53,63 +53,112 @@ function CheckoutPage() {
         const tempCart = [...cart]
         const cocaCola = tempCart.find(item => item.name === 'Coca-Cola')
         const croissant = tempCart.find(item => item.name === 'Croissants')
-        if(!appliedDiscounts.cocaCola && cocaCola !== undefined && cocaCola.count >= 6 ) {
-            if(cocaCola.available > 0) {
-                ++cocaCola.count;
-                --cocaCola.available;
+        if(cocaCola !== undefined && cocaCola.count >= 6 ) {
+            //no. of discounted coke cans applicable on current cart
+            const discountedCokeCount = Math.floor((cocaCola.count - appliedDiscounts.cocaCola) / 6) 
+            const numCokeToBeAdded = discountedCokeCount - appliedDiscounts.cocaCola 
+            if(numCokeToBeAdded > 0) {
+                //discountedCokeAdded represents the number of coke cans added in this function call 
+                let discountedCokeAdded = 0
+                for(let i = 0; i < numCokeToBeAdded && cocaCola.available > 0; ++i) {
+                    ++cocaCola.count;
+                    --cocaCola.available;
+                    ++discountedCokeAdded;
+                } 
                 setCart(tempCart)
+                setAppliedDiscounts({...appliedDiscounts, cocaCola: (appliedDiscounts.cocaCola + discountedCokeAdded)})
+                setDiscount(discount + (Number(cocaCola.price.slice(1)) * discountedCokeAdded ))
             }
-            setDiscount(discount + Number(cocaCola.price.slice(1)))
-            setAppliedDiscounts({...appliedDiscounts, cocaCola: true})
-        } else if(appliedDiscounts.cocaCola && (cocaCola === undefined || cocaCola.count < 6)) {
-            removeAppliedOffer('Coca-Cola')
         }
+        
 
-        if(!appliedDiscounts.croissant && croissant !== undefined && croissant.count >= 3) {
-            console.log('inside croissant discount')
+        if(croissant !== undefined && croissant.count >= 3) {
+            const discountedCoffeeCount = Math.floor((croissant.count) / 3) 
+            let numCoffeeToBeAdded = discountedCoffeeCount - appliedDiscounts.croissant
             const coffee = tempCart.find(item => item.name === 'Coffee')
-            if(coffee === undefined) {
-                const coffeeProduct = products.find(item => item.name === 'Coffee')
-                const addedProduct = {
-                    name: 'Coffee',
-                    price: coffeeProduct.price,
-                    count: 1,
-                    img: coffeeProduct.img,
-                    available: coffeeProduct.available - 1
+            if(numCoffeeToBeAdded > 0) {
+                if(coffee === undefined) {
+                    // adding coffee to the cart for the first time
+                    const coffeeProduct = products.find(item => item.name === 'Coffee')
+                    const addedProduct = {
+                        name: 'Coffee',
+                        price: coffeeProduct.price,
+                        count: numCoffeeToBeAdded,
+                        img: coffeeProduct.img,
+                        available: coffeeProduct.available - numCoffeeToBeAdded
+                    }
+                    tempCart.push(addedProduct)
+                    setDiscount(discount + Number(coffeeProduct.price.slice(1)) * addedProduct.count)
+                } else if(coffee.available > numCoffeeToBeAdded) {
+                    coffee.count += numCoffeeToBeAdded
+                    coffee.available -= numCoffeeToBeAdded
+                    setDiscount(discount + Number(coffee.price.slice(1)) * numCoffeeToBeAdded)
+                } else {
+                    coffee.count += coffee.available
+                    setDiscount(discount + Number(coffee.price.slice(1)) * coffee.available)
+                    numCoffeeToBeAdded = coffee.available
+                    coffee.available = 0
                 }
-                tempCart.push(addedProduct)
-                setDiscount(discount + Number(coffeeProduct.price.slice(1)))
-            } else if(coffee.available > 0) {
-                ++coffee.count;
-                setDiscount(discount + Number(coffee.price.slice(1)))
+                setCart(tempCart)
+                setAppliedDiscounts({...appliedDiscounts, croissant: (appliedDiscounts.croissant + numCoffeeToBeAdded)})
             }
-            setCart(tempCart)
-            setAppliedDiscounts({...appliedDiscounts, croissant: true})
-        } else if(appliedDiscounts.croissant && croissant.count < 3) {
-            removeAppliedOffer('Croissants')
-        }
+            
+        } 
 
     }
 
-    function removeAppliedOffer(offerItem) {
+    //remove offers which are no longer applicable
+    function removeAppliedOffer() {
         const tempCart = [...cart]
-        if(offerItem === 'Croissants') {
-            const coffee = tempCart.find(item => item.name === 'Coffee')
-            if(coffee !== undefined) {
-                decrementItem('Coffee')
-                const coffeeProduct = products.find(item => item.name === 'Coffee')
-                setDiscount(discount - Number(coffeeProduct.price.slice(1)))
+
+        if(appliedDiscounts.cocaCola > 0) {
+            const cocaCola = tempCart.find(item => item.name === 'Coca-Cola')
+            if(cocaCola !== undefined) {
+                const discountedCokeCount = Math.floor((cocaCola.count) / 6) 
+                const discountDifference = appliedDiscounts.cocaCola - discountedCokeCount
+                if(discountDifference > 0) {
+                    cocaCola.count -= discountDifference
+                    cocaCola.available += discountDifference
+                    setCart(tempCart)
+                    setAppliedDiscounts({...appliedDiscounts, cocaCola: (appliedDiscounts.cocaCola - discountDifference)})
+                    setDiscount(discount - (Number(cocaCola.price.slice(1)) * discountDifference ))
+                }
+            } else {
+                // if coke is not present in cart but discounts are applied
+                const cokePrice = Number(products.find(item => item.name === 'Coca-Cola').price.slice(1))
+                setDiscount(discount - (cokePrice * appliedDiscounts.cocaCola))
+                setAppliedDiscounts({...appliedDiscounts, cocaCola: 0})
             }
-            setAppliedDiscounts({...appliedDiscounts, croissant: false})
-        } else if(offerItem === 'Coca-Cola'){
-            const cocaCola = products.find(item => item.name === 'Coca-Cola')
-            setDiscount(discount - Number(cocaCola.price.slice(1)))
-            setAppliedDiscounts({...appliedDiscounts, cocaCola: false})
+        }
+
+        if(appliedDiscounts.croissant) {
+            const croissant = tempCart.find(item => item.name === 'Croissants')
+            const coffee = tempCart.find(item => item.name === 'Coffee')
+            if(coffee !== undefined && croissant !== undefined) {
+                const discountedCoffeeCount = Math.floor(croissant.count / 3)
+                const discountDifference = appliedDiscounts.croissant - discountedCoffeeCount
+                if(discountDifference > 0) {
+                    coffee.count -= discountDifference
+                    coffee.available += discountDifference
+                    setCart(tempCart)
+                    if(coffee.count === 0) {
+                        removeItemFromCart('Coffee')
+                    }
+                    setDiscount(discount - (Number(coffee.price.slice(1)) * discountDifference))
+                    setAppliedDiscounts({...appliedDiscounts, croissant: appliedDiscounts.croissant - discountDifference})
+                }
+            } else {
+                const coffeePrice = Number(products.find(item => item.name === 'Coffee').price.slice(1))
+                setDiscount(discount - (coffeePrice * appliedDiscounts.croissant))
+                setAppliedDiscounts({...appliedDiscounts, croissant: 0})
+            }
+            
         }
     }
 
     useEffect(() => {
         getApplicableOffers()
+        removeAppliedOffer()
         getTotal()
     }, [cart, appliedDiscounts])
 
@@ -141,15 +190,15 @@ function CheckoutPage() {
             <div className='classAmounts'>
                 <div className="subTotal">
                     <span>Subtotal</span>
-                    <span>£{total}</span>
+                    <span>£{total.toFixed(2)}</span>
                 </div>
                 <div className="discount">
                     <span>Discount</span>
-                    <span>£{discount}</span>
+                    <span>£{discount.toFixed(2)}</span>
                 </div>
                 <div className="total">
                     <span>Total</span>
-                    <span>£{total - discount}</span>
+                    <span>£{(total - discount).toFixed(2)}</span>
                     <button>Checkout</button>
                 </div>
             </div>

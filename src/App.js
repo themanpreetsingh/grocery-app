@@ -12,7 +12,7 @@ function App() {
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
   //used to keep track of currently applied discounts
-  const [appliedDiscounts, setAppliedDiscounts] = useState({cocaCola: false, croissant: false})
+  const [appliedDiscounts, setAppliedDiscounts] = useState({cocaCola: 0, croissant: 0})
   const [discount, setDiscount] = useState(0)
 
   //function used to fetch data from api 
