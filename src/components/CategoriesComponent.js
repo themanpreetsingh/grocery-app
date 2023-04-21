@@ -8,6 +8,7 @@ function CategoriesComponent({onCategorySelect}) {
             <button onClick={() => onCategorySelect('drinks')}>Drinks</button>
             <button onClick={() => onCategorySelect('fruit')}>Fruit</button>
             <button onClick={() => onCategorySelect('bakery')}>Bakery</button>
+            <button onClick={() => onCategorySelect('offers')}>Offers</button>
         </div>
     )
 }
