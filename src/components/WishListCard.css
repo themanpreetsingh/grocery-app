@@ -1,0 +1,15 @@
+.wishlistCard {
+    display: flex;
+    box-shadow: 5px 5px 20px rgba(133, 133, 133, 0.2);
+    border-radius: 30px;
+    aspect-ratio: 9.9;
+    margin: 2rem;
+    align-items: center;
+    width: 75%;
+}
+
+.wishlistCard img {
+    object-fit: scale-down;
+    width: 10%;
+    margin: 0 2rem;
+}

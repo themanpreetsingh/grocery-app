@@ -171,17 +171,17 @@ function CheckoutPage() {
                     cart.map((product, index) => {
                         return (
                         <CartItem 
-                        key={index}
-                        name={product.name}
-                        img={product.img}
-                        price={product.price}
-                        count={product.count}
-                        available={product.available}
-                        total={total}
-                        setTotal={setTotal}
-                        incrementItem={incrementItem}
-                        decrementItem={decrementItem}
-                        removeItemFromCart={removeItemFromCart}
+                            key={index}
+                            name={product.name}
+                            img={product.img}
+                            price={product.price}
+                            count={product.count}
+                            available={product.available}
+                            total={total}
+                            setTotal={setTotal}
+                            incrementItem={incrementItem}
+                            decrementItem={decrementItem}
+                            removeItemFromCart={removeItemFromCart}
                         />
                     )})
                 }

@@ -6,14 +6,16 @@ import SearchPage from './pages/SearchPage';
 import CheckoutPage from './pages/CheckoutPage';
 import CartContext from './CartContext';
 import { Route, Routes } from "react-router-dom";
+import WishlistPage from './pages/WishlistPage';
 
 function App() {
-  const [searchFilter, setSearchFilter] = useState('');
-  const [cart, setCart] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [searchFilter, setSearchFilter] = useState('')
+  const [cart, setCart] = useState([])
+  const [products, setProducts] = useState([])
   //used to keep track of currently applied discounts
   const [appliedDiscounts, setAppliedDiscounts] = useState({cocaCola: 0, croissant: 0})
   const [discount, setDiscount] = useState(0)
+  const [wishlist, setWishlist] = useState([])
 
   //function used to fetch data from api 
   async function fetchData() {
@@ -30,6 +32,12 @@ function App() {
     //function used to get set the products state variable when data is received
     async function getData() {
       const fetchedData = await fetchData();
+      //adding offer information to the products list
+      const croissant = fetchedData.find(item => item.name === 'Croissants')
+      const cocaCola = fetchedData.find(item => item.name === 'Coca-Cola')
+      croissant.offer = true
+      cocaCola.offer = true
+
       setProducts(fetchedData)
     }
     getData()
@@ -40,12 +48,13 @@ function App() {
   }
 
   return (
-    <CartContext.Provider value={{cart, setCart, products, appliedDiscounts, setAppliedDiscounts, discount, setDiscount}}>
+    <CartContext.Provider value={{cart, setCart, products, appliedDiscounts, setAppliedDiscounts, discount, setDiscount, wishlist, setWishlist}}>
       <div className="container">
         <NavbarComponent onSearch={onSearch}/>
         <Routes>
           <Route path='/' element={<SearchPage searchFilter={searchFilter}/>}/>
           <Route path='/checkout' element={<CheckoutPage/>}/>
+          <Route path='/wishlist' element={<WishlistPage/>}/>
         </Routes>
       </div>
     </CartContext.Provider>

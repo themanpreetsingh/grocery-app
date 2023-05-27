@@ -6,7 +6,7 @@ import AddToWishlistIcon from '../icons/AddToWishlistIcon'
 import ItemCountComponent from './ItemCountComponent'
 import CartContext from '../CartContext'
 
-function ProductCard({name, description, img, price, available, countMap}) {
+function ProductCard({name, description, img, price, available, countMap, addToWishlist}) {
 
     //cart contains details about the items in the cart
     const {cart, setCart} = useContext(CartContext);
@@ -79,7 +79,7 @@ function ProductCard({name, description, img, price, available, countMap}) {
                 <div className="priceAndIcons">
                     <span>{price}</span> 
                     <AddToCartIcon className={'icon' + (hideCart ? " hide" : "")} onClick={addToCart}/>
-                    <AddToWishlistIcon className="icon"/>
+                    <AddToWishlistIcon className="icon" onClick={() => addToWishlist(name)}/>
                 </div>
             </div>
         </div>
